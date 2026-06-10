@@ -69,9 +69,10 @@ data/                  Estrutura local para planilhas de exemplo
 1. O usuÃ¡rio acessa a aplicaÃ§Ã£o publicada.
 2. Importa uma planilha Excel com dados operacionais.
 3. O sistema lÃª, trata e padroniza as informaÃ§Ãµes.
-4. Os registros tratados sÃ£o gravados no Supabase/PostgreSQL.
-5. O dashboard recalcula os KPIs e atualiza grÃ¡ficos, comparativos e alertas.
-6. Os dados processados podem ser exportados em CSV.
+4. Os registros tratados sÃ£o gravados no Supabase/PostgreSQL quando hÃ¡ login autorizado.
+5. Visitantes podem testar planilhas em modo demo local, sem salvar no banco.
+6. O dashboard recalcula os KPIs e atualiza grÃ¡ficos, comparativos e alertas.
+7. Os dados processados podem ser exportados em CSV.
 
 ---
 
@@ -109,13 +110,7 @@ Execute os arquivos SQL no Supabase SQL Editor:
 2. `supabase/seed.sql` opcional, para dados fictÃ­cios
 3. `supabase/authenticated_write_policies.sql` para permitir escrita autenticada
 
-Para ambiente de demonstraÃ§Ã£o pÃºblica, existe tambÃ©m:
-
-```text
-supabase/demo_public_upload_policies.sql
-```
-
-Esse arquivo libera upload pÃºblico para facilitar testes de portfÃ³lio. NÃ£o Ã© recomendado para uso em produÃ§Ã£o.
+O frontend nÃ£o usa service role key. A escrita no banco depende de autenticaÃ§Ã£o e polÃ­ticas do Supabase.
 
 ---
 

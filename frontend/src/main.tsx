@@ -85,32 +85,48 @@ function useIsMobile() {
   return isMobile;
 }
 
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+}
+
+function isDuplicateEmailError(message: string) {
+  const normalized = message.toLowerCase();
+  return normalized.includes("user already registered") || normalized.includes("already registered") || normalized.includes("already exists");
+}
+
+function hasNoIdentities(data: { user?: { identities?: unknown[] } | null } | null) {
+  return Boolean(data?.user && Array.isArray(data.user.identities) && data.user.identities.length === 0);
+}
+
 function translateSupabaseError(message: string) {
   const normalized = message.toLowerCase();
 
+  if (isDuplicateEmailError(message)) {
+    return "Este e-mail jÃ¡ possui cadastro. Tente entrar com sua senha.";
+  }
+
   if (normalized.includes("email not confirmed")) {
-    return "Email ainda nao confirmado. Confirme pelo link recebido ou desative a confirmacao de email no Supabase.";
+    return "E-mail ainda nÃ£o confirmado. Verifique sua caixa de entrada antes de fazer login.";
   }
 
   if (normalized.includes("signup") || normalized.includes("signups")) {
-    return "Cadastro bloqueado no Supabase. Confira Authentication > Sign In / Providers > Allow new users to sign up.";
+    return "Cadastro bloqueado no Supabase. Confira se novos cadastros estÃ£o habilitados.";
   }
 
   if (normalized.includes("invalid login credentials")) {
-    return "Email ou senha incorretos.";
+    return "E-mail ou senha incorretos.";
   }
 
-  if (normalized.includes("row-level security") || normalized.includes("permission denied")) {
-    return "Sem permissao para gravar no banco. Para portfÃ³lio/demo, rode o SQL em supabase/demo_public_upload_policies.sql.";
+  if (normalized.includes("row-level security") || normalized.includes("permission denied") || normalized.includes("permission")) {
+    return "VocÃª nÃ£o tem permissÃ£o para salvar dados no banco. FaÃ§a login como administrador ou use o modo demo local.";
   }
 
   if (normalized.includes("invalid api key")) {
-    return "Chave do Supabase invalida. Confira as variaveis VITE_SUPABASE_URL e VITE_SUPABASE_PUBLISHABLE_KEY no Netlify.";
+    return "Chave do Supabase invÃ¡lida. Confira as variÃ¡veis VITE_SUPABASE_URL e VITE_SUPABASE_PUBLISHABLE_KEY no Netlify.";
   }
 
   return message;
 }
-
 function Dashboard() {
   const isMobile = useIsMobile();
   const chartHeight = isMobile ? 230 : 320;
@@ -173,13 +189,35 @@ function Dashboard() {
 
   async function handleSpreadsheetUpload(file: File) {
     setImporting(true);
-    setImportStatus(session ? "Lendo planilha..." : "Lendo planilha em modo demo...");
+    setImportStatus("Lendo planilha...");
 
     try {
       const result = await parseSpreadsheet(file);
 
       if (!result.records.length) {
-        setImportStatus("Nenhum registro valido encontrado. Confira os nomes das colunas.");
+        setImportStatus("Nenhum registro vÃ¡lido encontrado. Confira os nomes das colunas.");
+        return;
+      }
+
+      const timestamp = Date.now();
+      const localRecords = result.records.map((record, index) => ({
+        ...record,
+        id: timestamp + index,
+      })) as KPIRecord[];
+      const localIncidents = result.incidents.map((incident, index) => ({
+        ...incident,
+        id: timestamp + result.records.length + index,
+      })) as Incident[];
+
+      if (!session) {
+        setRecords((currentRecords) => (importMode === "replace" ? localRecords : [...currentRecords, ...localRecords]));
+        setIncidents((currentIncidents) => (importMode === "replace" ? localIncidents : [...localIncidents, ...currentIncidents]));
+        setSelectedMonth("all");
+        setSelectedSource("all");
+        setError("");
+        setImportStatus(
+          "Planilha carregada em modo demo. Os dados foram atualizados apenas nesta sessÃ£o e nÃ£o foram salvos no banco.",
+        );
         return;
       }
 
@@ -209,7 +247,7 @@ function Dashboard() {
       }
 
       setImportStatus(
-        `ImportaÃ§Ã£o concluida: ${result.records.length} registros, ${result.incidents.length} alertas, ${result.sheets.length} abas.`,
+        `ImportaÃ§Ã£o concluÃ­da: ${result.records.length} registros, ${result.incidents.length} alertas, ${result.sheets.length} abas.`,
       );
       await loadData();
     } catch (err) {
@@ -219,10 +257,9 @@ function Dashboard() {
       setImporting(false);
     }
   }
-
   async function signIn() {
     if (!authEmail || !authPassword) {
-      setAuthMessage("Preencha email e senha.");
+      setAuthMessage("Preencha e-mail e senha.");
       return;
     }
 
@@ -243,14 +280,21 @@ function Dashboard() {
   }
 
   async function signUp() {
-    if (!authEmail || authPassword.length < 6) {
-      setAuthMessage("Use um email valido e senha com pelo menos 6 caracteres.");
+    const email = authEmail.trim();
+
+    if (!isValidEmail(email)) {
+      setAuthMessage("Informe um e-mail vÃ¡lido.");
+      return;
+    }
+
+    if (authPassword.length < 6) {
+      setAuthMessage("Use uma senha com pelo menos 6 caracteres.");
       return;
     }
 
     setAuthMessage("Criando usuÃ¡rio...");
     const { data, error: signUpError } = await supabase.auth.signUp({
-      email: authEmail,
+      email,
       password: authPassword,
       options: {
         emailRedirectTo: window.location.origin,
@@ -262,15 +306,18 @@ function Dashboard() {
       return;
     }
 
-    setAuthEmail("");
+    if (hasNoIdentities(data)) {
+      setAuthMessage("Este e-mail jÃ¡ possui cadastro. Tente entrar com sua senha.");
+      return;
+    }
+
     setAuthPassword("");
     setShowAuthControls(Boolean(data.session));
-    setAuthMessage(data.session ? "Usuario criado e logado." : "Usuario criado. Agora clique em Entrar.");
+    setAuthMessage(data.session ? "UsuÃ¡rio criado e Login realizado." : "Cadastro criado. Verifique seu e-mail antes de fazer login.");
   }
-
   async function signOut() {
     await supabase.auth.signOut();
-    setAuthMessage("Sessao encerrada.");
+    setAuthMessage("SessÃ£o encerrada.");
   }
 
   const months = React.useMemo(() => Array.from(new Set(records.map((record) => getMonth(record.data)))).sort(), [records]);
@@ -383,6 +430,11 @@ function Dashboard() {
           <p>Envie um Excel com colunas de data, investimento, leads, vendas, faturamento e lucro. Login recomendado; para demo, libere as politicas pÃºblicas de importacao.</p>
         </div>
         <div className="auth-shell">
+          <p className="auth-helper">
+            {session
+              ? `Logado como: ${session.user.email}. Uploads serÃ£o salvos no Supabase.`
+              : "Visitantes podem testar planilhas em modo demo. Para salvar no banco, faÃ§a login como administrador."}
+          </p>
           <button
             className="auth-toggle"
             type="button"
@@ -857,6 +909,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <App />
   </React.StrictMode>,
 );
+
 
 
 
