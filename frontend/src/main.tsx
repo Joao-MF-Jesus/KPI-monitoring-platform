@@ -132,6 +132,7 @@ function App() {
   const [authEmail, setAuthEmail] = React.useState("");
   const [authPassword, setAuthPassword] = React.useState("");
   const [authMessage, setAuthMessage] = React.useState("");
+  const [showAuthControls, setShowAuthControls] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState("");
 
@@ -370,29 +371,41 @@ function App() {
           <h2>Importar planilha</h2>
           <p>Envie um Excel com colunas de data, investimento, leads, vendas, faturamento e lucro. Login recomendado; para demo, libere as politicas publicas de importacao.</p>
         </div>
-        <div className="auth-panel">
-          {session ? (
-            <>
-              <span>{session.user.email}</span>
-              <button type="button" onClick={signOut}>Sair</button>
-            </>
-          ) : (
-            <>
-              <input
-                type="email"
-                placeholder="Email"
-                value={authEmail}
-                onChange={(event) => setAuthEmail(event.target.value)}
-              />
-              <input
-                type="password"
-                placeholder="Senha"
-                value={authPassword}
-                onChange={(event) => setAuthPassword(event.target.value)}
-              />
-              <button type="button" onClick={signIn}>Entrar</button>
-              <button type="button" onClick={signUp}>Criar usuario</button>
-            </>
+        <div className="auth-shell">
+          <button
+            className="auth-toggle"
+            type="button"
+            onClick={() => setShowAuthControls((current) => !current)}
+            aria-expanded={showAuthControls}
+          >
+            {session ? session.user.email : "Login administrativo"}
+          </button>
+          {(showAuthControls || session) && (
+            <div className="auth-panel">
+              {session ? (
+                <>
+                  <span>{session.user.email}</span>
+                  <button type="button" onClick={signOut}>Sair</button>
+                </>
+              ) : (
+                <>
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={authEmail}
+                    onChange={(event) => setAuthEmail(event.target.value)}
+                  />
+                  <input
+                    type="password"
+                    placeholder="Senha"
+                    value={authPassword}
+                    onChange={(event) => setAuthPassword(event.target.value)}
+                  />
+                  <button type="button" onClick={signIn}>Entrar</button>
+                  <button type="button" onClick={signUp}>Criar usuario</button>
+                </>
+              )}
+            </div>
           )}
         </div>
         <div className="upload-controls">
@@ -701,6 +714,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <App />
   </React.StrictMode>,
 );
+
 
 
 
