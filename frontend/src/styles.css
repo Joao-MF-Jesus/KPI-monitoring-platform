@@ -841,3 +841,36 @@ input,
     font-size: 14px;
   }
 }
+
+/* Button vertical alignment fix */
+button,
+.theme-toggle,
+.auth-panel button,
+.auth-toggle,
+.export-actions button,
+.file-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  text-align: center;
+}
+
+select,
+input {
+  line-height: normal;
+}
+
+@media (max-width: 760px) {
+  button,
+  .theme-toggle,
+  .auth-panel button,
+  .auth-toggle,
+  .export-actions button,
+  .file-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+}
