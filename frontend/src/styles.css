@@ -525,3 +525,205 @@ select,
     width: 100%;
   }
 }
+
+/* Mobile polish for portfolio deployment */
+html,
+body,
+#root {
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+button,
+select,
+input,
+.file-button {
+  font: inherit;
+}
+
+.panel,
+.metric,
+.upload-panel,
+.export-panel,
+.state {
+  min-width: 0;
+}
+
+.recharts-responsive-container,
+.recharts-wrapper,
+.recharts-surface {
+  max-width: 100%;
+}
+
+@media (max-width: 760px) {
+  main {
+    width: 100%;
+    padding: 18px 12px 28px;
+  }
+
+  .app-header {
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+  }
+
+  h1 {
+    font-size: 30px;
+    line-height: 1.08;
+  }
+
+  h2 {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .filters {
+    gap: 8px;
+  }
+
+  select,
+  .theme-toggle,
+  .auth-panel input,
+  .auth-panel button,
+  .upload-controls select,
+  .file-button,
+  .export-actions button {
+    min-width: 0;
+    width: 100%;
+    height: 46px;
+    font-size: 14px;
+  }
+
+  .upload-panel,
+  .export-panel,
+  .panel,
+  .metric,
+  .state {
+    border-radius: 8px;
+    box-shadow: none;
+  }
+
+  .upload-panel,
+  .export-panel {
+    padding: 14px;
+  }
+
+  .auth-panel,
+  .upload-controls,
+  .export-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .auth-panel span {
+    overflow-wrap: anywhere;
+  }
+
+  .metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .metric {
+    min-height: 92px;
+    padding: 14px;
+  }
+
+  .metric span {
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+
+  .metric strong {
+    font-size: 22px;
+    overflow-wrap: anywhere;
+  }
+
+  .comparison-grid,
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .panel {
+    min-height: auto;
+    padding: 14px;
+    overflow: hidden;
+  }
+
+  .comparison-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .comparison-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-item {
+    min-height: 104px;
+  }
+
+  .comparison-item strong {
+    font-size: 20px;
+  }
+
+  .insights p {
+    font-size: 14px;
+  }
+
+  .alerts {
+    gap: 8px;
+  }
+
+  .alert {
+    padding: 10px;
+  }
+
+  .recharts-wrapper {
+    font-size: 11px;
+  }
+
+  .recharts-legend-wrapper {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  main {
+    padding-inline: 10px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  .metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metric {
+    min-height: 84px;
+  }
+
+  .metric strong {
+    font-size: 24px;
+  }
+
+  .upload-panel p,
+  .export-panel p,
+  .state,
+  .empty {
+    font-size: 14px;
+  }
+
+  .recharts-cartesian-axis-tick-value {
+    font-size: 10px;
+  }
+}
