@@ -111,7 +111,7 @@ function translateSupabaseError(message: string) {
   return message;
 }
 
-function App() {
+function Dashboard() {
   const isMobile = useIsMobile();
   const chartHeight = isMobile ? 230 : 320;
   const compactChartHeight = isMobile ? 210 : 230;
@@ -676,6 +676,116 @@ function App() {
   );
 }
 
+
+function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
+  const features = [
+    {
+      title: "Upload de planilhas",
+      description: "Importacao de arquivos com dados de campanhas, vendas e indicadores.",
+    },
+    {
+      title: "Tratamento de dados",
+      description: "Padronizacao e organizacao dos dados antes da analise.",
+    },
+    {
+      title: "Dashboard de KPIs",
+      description: "Visualizacao de faturamento, lucro, ROI, CPA, CPL, leads e vendas.",
+    },
+    {
+      title: "Alertas operacionais",
+      description: "Identificacao de situacoes criticas, como CPA alto ou ROI abaixo do esperado.",
+    },
+    {
+      title: "Exportacao de logs",
+      description: "Download de registros e informacoes processadas pelo sistema.",
+    },
+  ];
+
+  const technologies = ["React", "Python", "Pandas", "Supabase", "PostgreSQL", "Netlify"];
+
+  return (
+    <main className="landing-page">
+      <section className="landing-hero">
+        <p className="eyebrow">Observabilidade comercial</p>
+        <h1>KPI Monitoring Platform</h1>
+        <p className="landing-description">
+          Plataforma para monitoramento de KPIs de negocio a partir de planilhas, permitindo importar dados,
+          tratar informacoes, acompanhar indicadores e identificar alertas operacionais.
+        </p>
+        <div className="landing-actions">
+          <button type="button" onClick={onOpenDashboard}>
+            Ver Dashboard
+          </button>
+          <a href="https://github.com/Joao-MF-Jesus/KPI-monitoring-platform" target="_blank" rel="noreferrer">
+            Ver Repositorio no GitHub
+          </a>
+        </div>
+      </section>
+
+      <section className="landing-section">
+        <h2>Problema que o projeto resolve</h2>
+        <p>
+          Muitas empresas acompanham indicadores em planilhas separadas, dificultando a analise de desempenho.
+          Este projeto centraliza os dados, transforma planilhas em indicadores visuais e ajuda a identificar
+          problemas de performance com mais rapidez.
+        </p>
+      </section>
+
+      <section className="landing-section">
+        <h2>Funcionalidades</h2>
+        <div className="feature-grid">
+          {features.map((feature) => (
+            <article className="feature-card" key={feature.title}>
+              <h3>{feature.title}</h3>
+              <p>{feature.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="landing-section">
+        <h2>Tecnologias utilizadas</h2>
+        <div className="tech-list">
+          {technologies.map((technology) => (
+            <span key={technology}>{technology}</span>
+          ))}
+        </div>
+      </section>
+
+      <section className="landing-section">
+        <h2>Por que esse projeto importa?</h2>
+        <p>
+          Este projeto demonstra conhecimentos em analise de dados, tratamento de planilhas, modelagem de
+          indicadores, integracao com banco de dados, visualizacao de KPIs e construcao de uma aplicacao
+          analitica publicada.
+        </p>
+      </section>
+
+      <p className="mvp-note">
+        Projeto em versao MVP, desenvolvido para demonstrar um fluxo completo de analise: upload, tratamento,
+        persistencia, visualizacao e monitoramento de KPIs.
+      </p>
+    </main>
+  );
+}
+
+function App() {
+  const [view, setView] = React.useState(() => (window.location.hash === "#dashboard" ? "dashboard" : "home"));
+
+  React.useEffect(() => {
+    const handleHashChange = () => setView(window.location.hash === "#dashboard" ? "dashboard" : "home");
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  function openDashboard() {
+    window.location.hash = "dashboard";
+    setView("dashboard");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  return view === "dashboard" ? <Dashboard /> : <LandingPage onOpenDashboard={openDashboard} />;
+}
 function Metric({ label, value }: { label: string; value: string }) {
   return (
     <article className="metric">
@@ -725,6 +835,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <App />
   </React.StrictMode>,
 );
+
 
 
 
