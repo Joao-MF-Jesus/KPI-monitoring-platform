@@ -706,6 +706,10 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
   return (
     <main className="landing-page">
       <section className="landing-hero">
+        <div className="landing-kicker">
+          <span>Projeto MVP de portfolio</span>
+          <span>Analise de dados e KPIs</span>
+        </div>
         <p className="eyebrow">Observabilidade comercial</p>
         <h1>KPI Monitoring Platform</h1>
         <p className="landing-description">
@@ -720,10 +724,20 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
             Ver Repositorio no GitHub
           </a>
         </div>
+        <div className="landing-flow" aria-label="Fluxo do sistema">
+          <span>Upload</span>
+          <span>Tratamento</span>
+          <span>Banco de dados</span>
+          <span>Dashboard</span>
+          <span>Alertas</span>
+        </div>
       </section>
 
-      <section className="landing-section">
-        <h2>Problema que o projeto resolve</h2>
+      <section className="landing-section landing-problem">
+        <div>
+          <span className="section-label">Contexto</span>
+          <h2>Problema que o projeto resolve</h2>
+        </div>
         <p>
           Muitas empresas acompanham indicadores em planilhas separadas, dificultando a analise de desempenho.
           Este projeto centraliza os dados, transforma planilhas em indicadores visuais e ajuda a identificar
@@ -732,7 +746,10 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
       </section>
 
       <section className="landing-section">
-        <h2>Funcionalidades</h2>
+        <div className="section-heading">
+          <span className="section-label">Produto</span>
+          <h2>Funcionalidades</h2>
+        </div>
         <div className="feature-grid">
           {features.map((feature) => (
             <article className="feature-card" key={feature.title}>
@@ -744,7 +761,10 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
       </section>
 
       <section className="landing-section">
-        <h2>Tecnologias utilizadas</h2>
+        <div className="section-heading">
+          <span className="section-label">Stack</span>
+          <h2>Tecnologias utilizadas</h2>
+        </div>
         <div className="tech-list">
           {technologies.map((technology) => (
             <span key={technology}>{technology}</span>
@@ -752,8 +772,11 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
         </div>
       </section>
 
-      <section className="landing-section">
-        <h2>Por que esse projeto importa?</h2>
+      <section className="landing-section landing-importance">
+        <div>
+          <span className="section-label">Valor tecnico</span>
+          <h2>Por que esse projeto importa?</h2>
+        </div>
         <p>
           Este projeto demonstra conhecimentos em analise de dados, tratamento de planilhas, modelagem de
           indicadores, integracao com banco de dados, visualizacao de KPIs e construcao de uma aplicacao
@@ -768,7 +791,6 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
     </main>
   );
 }
-
 function App() {
   const [view, setView] = React.useState(() => (window.location.hash === "#dashboard" ? "dashboard" : "home"));
 
@@ -835,6 +857,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <App />
   </React.StrictMode>,
 );
+
 
 
 
