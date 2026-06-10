@@ -727,3 +727,75 @@ input,
     font-size: 10px;
   }
 }
+
+/* Second mobile polish pass */
+@media (max-width: 760px) {
+  body {
+    font-size: 15px;
+  }
+
+  .upload-controls {
+    order: 2;
+  }
+
+  .auth-panel {
+    order: 3;
+  }
+
+  .auth-status,
+  .import-status {
+    order: 4;
+  }
+
+  .upload-panel p,
+  .export-panel p {
+    line-height: 1.35;
+  }
+
+  .metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metric {
+    min-height: 86px;
+    padding: 12px;
+  }
+
+  .metric strong {
+    font-size: 21px;
+  }
+
+  .panel {
+    padding: 14px 12px;
+  }
+
+  .recharts-legend-wrapper {
+    font-size: 12px;
+  }
+
+  .recharts-default-tooltip {
+    max-width: min(260px, calc(100vw - 64px));
+    white-space: normal !important;
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 420px) {
+  .metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metric strong {
+    font-size: 20px;
+  }
+
+  .comparison-item strong {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 360px) {
+  .metric-grid {
+    grid-template-columns: 1fr;
+  }
+}

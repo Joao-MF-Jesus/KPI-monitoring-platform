@@ -71,6 +71,20 @@ function currencyDelta(current: number, previous: number) {
   return `${delta >= 0 ? "+" : "-"}${formatCurrency(Math.abs(delta))}`;
 }
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = React.useState(() => window.matchMedia("(max-width: 760px)").matches);
+
+  React.useEffect(() => {
+    const query = window.matchMedia("(max-width: 760px)");
+    const update = () => setIsMobile(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  return isMobile;
+}
+
 function translateSupabaseError(message: string) {
   const normalized = message.toLowerCase();
 
@@ -98,6 +112,13 @@ function translateSupabaseError(message: string) {
 }
 
 function App() {
+  const isMobile = useIsMobile();
+  const chartHeight = isMobile ? 230 : 320;
+  const compactChartHeight = isMobile ? 210 : 230;
+  const areaChartHeight = isMobile ? 230 : 300;
+  const currencyTooltip = (value: unknown) => formatCurrency(Number(value));
+  const numberTooltip = (value: unknown, name: unknown) =>
+    name === "vendas" ? formatNumber(Number(value)) : Number(value).toFixed(1);
   const [records, setRecords] = React.useState<KPIRecord[]>([]);
   const [incidents, setIncidents] = React.useState<Incident[]>([]);
   const [selectedMonth, setSelectedMonth] = React.useState("all");
@@ -555,12 +576,12 @@ function App() {
                 <p className="empty">A leitura executiva aparece quando existem dois periodos comparaveis.</p>
               )}
               {comparisonChartData.length > 0 && (
-                <ResponsiveContainer width="100%" height={230}>
+                <ResponsiveContainer width="100%" height={compactChartHeight}>
                   <BarChart data={comparisonChartData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="periodo" />
                     <YAxis />
-                    <Tooltip formatter={(value, name) => (name === "vendas" || name === "roi" ? Number(value).toFixed(1) : formatCurrency(Number(value)))} />
+                    <Tooltip formatter={(value, name) => (name === "vendas" || name === "roi" ? numberTooltip(value, name) : currencyTooltip(value))} />
                     <Legend />
                     <Bar dataKey="faturamento" fill="#2563eb" name="Faturamento" />
                     <Bar dataKey="lucro" fill="#16a34a" name="Lucro" />
@@ -572,12 +593,12 @@ function App() {
 
           <section className="dashboard-grid">
             <Panel title="Tendencia mensal">
-              <ResponsiveContainer width="100%" height={320}>
+              <ResponsiveContainer width="100%" height={chartHeight}>
                 <BarChart data={monthly}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="mes" />
                   <YAxis />
-                  <Tooltip formatter={(value) => formatCurrency(Number(value))} />
+                  <Tooltip formatter={(value) => currencyTooltip(value)} />
                   <Legend />
                   <Bar dataKey="faturamento" fill="#2563eb" name="Faturamento" />
                   <Bar dataKey="lucro" fill="#16a34a" name="Lucro" />
@@ -586,12 +607,12 @@ function App() {
             </Panel>
 
             <Panel title="ROI e custos">
-              <ResponsiveContainer width="100%" height={320}>
+              <ResponsiveContainer width="100%" height={chartHeight}>
                 <LineChart data={monthly}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="mes" />
                   <YAxis />
-                  <Tooltip />
+                  <Tooltip formatter={(value, name) => numberTooltip(value, name)} />
                   <Legend />
                   <Line type="monotone" dataKey="roi" stroke="#7c3aed" name="ROI" />
                   <Line type="monotone" dataKey="cpa" stroke="#f97316" name="CPA" />
@@ -601,12 +622,12 @@ function App() {
             </Panel>
 
             <Panel title="Top origens">
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={areaChartHeight}>
                 <AreaChart data={sourceSummary}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="source" />
                   <YAxis />
-                  <Tooltip formatter={(value) => formatCurrency(Number(value))} />
+                  <Tooltip formatter={(value) => currencyTooltip(value)} />
                   <Area type="monotone" dataKey="faturamento" stroke="#2563eb" fill="#93c5fd" name="Faturamento" />
                 </AreaChart>
               </ResponsiveContainer>
@@ -680,4 +701,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <App />
   </React.StrictMode>,
 );
+
 
