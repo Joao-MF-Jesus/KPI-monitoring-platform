@@ -874,3 +874,172 @@ input {
     line-height: 1;
   }
 }
+
+/* Final mobile stability pass */
+@media (max-width: 760px) {
+  main {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 18px 14px calc(88px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .app-header {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    margin-bottom: 14px !important;
+  }
+
+  h1 {
+    max-width: 100% !important;
+    font-size: clamp(28px, 8vw, 38px) !important;
+    line-height: 1.05 !important;
+  }
+
+  .filters,
+  .upload-controls,
+  .auth-panel,
+  .export-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  select,
+  input,
+  button,
+  .theme-toggle,
+  .auth-toggle,
+  .auth-panel button,
+  .export-actions button,
+  .file-button {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 48px !important;
+    height: 48px !important;
+    border-radius: 8px !important;
+    font-size: 15px !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+  }
+
+  button,
+  .theme-toggle,
+  .auth-toggle,
+  .auth-panel button,
+  .export-actions button,
+  .file-button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 14px !important;
+    white-space: normal !important;
+  }
+
+  select,
+  input {
+    padding: 0 14px !important;
+  }
+
+  .upload-panel,
+  .export-panel,
+  .panel,
+  .metric,
+  .state {
+    width: 100% !important;
+    margin-inline: 0 !important;
+    border-radius: 10px !important;
+  }
+
+  .upload-panel,
+  .export-panel {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    padding: 16px !important;
+  }
+
+  .upload-panel h2,
+  .export-panel h2,
+  .panel h2 {
+    margin-bottom: 8px !important;
+  }
+
+  .upload-panel p,
+  .export-panel p {
+    margin-bottom: 0 !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+  }
+
+  .metric-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .metric {
+    min-height: 92px !important;
+    padding: 13px !important;
+  }
+
+  .metric span {
+    margin-bottom: 8px !important;
+    font-size: 12px !important;
+  }
+
+  .metric strong {
+    font-size: clamp(20px, 6vw, 25px) !important;
+    line-height: 1.1 !important;
+  }
+
+  .comparison-grid,
+  .dashboard-grid,
+  .comparison-metrics {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .panel {
+    min-height: 0 !important;
+    padding: 16px !important;
+  }
+
+  .comparison-header {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 4px !important;
+  }
+
+  .comparison-item {
+    min-height: 0 !important;
+    padding: 13px !important;
+  }
+
+  .recharts-wrapper {
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  .recharts-default-tooltip {
+    max-width: min(250px, calc(100vw - 72px)) !important;
+    white-space: normal !important;
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  main {
+    padding-inline: 10px !important;
+  }
+
+  .metric-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  h1 {
+    font-size: 28px !important;
+  }
+}
