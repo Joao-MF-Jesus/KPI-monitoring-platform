@@ -101,7 +101,7 @@ function translateSupabaseError(message: string) {
   }
 
   if (normalized.includes("row-level security") || normalized.includes("permission denied")) {
-    return "Sem permissao para gravar no banco. Para portfolio/demo, rode o SQL em supabase/demo_public_upload_policies.sql.";
+    return "Sem permissao para gravar no banco. Para portfÃ³lio/demo, rode o SQL em supabase/demo_public_upload_policies.sql.";
   }
 
   if (normalized.includes("invalid api key")) {
@@ -209,7 +209,7 @@ function Dashboard() {
       }
 
       setImportStatus(
-        `Importacao concluida: ${result.records.length} registros, ${result.incidents.length} alertas, ${result.sheets.length} abas.`,
+        `ImportaÃ§Ã£o concluida: ${result.records.length} registros, ${result.incidents.length} alertas, ${result.sheets.length} abas.`,
       );
       await loadData();
     } catch (err) {
@@ -248,7 +248,7 @@ function Dashboard() {
       return;
     }
 
-    setAuthMessage("Criando usuario...");
+    setAuthMessage("Criando usuÃ¡rio...");
     const { data, error: signUpError } = await supabase.auth.signUp({
       email: authEmail,
       password: authPassword,
@@ -305,14 +305,14 @@ function Dashboard() {
   const comparisonChartData = effectiveComparisonMonth
     ? [
         {
-          periodo: effectiveComparisonMonth,
+          perÃ­odo: effectiveComparisonMonth,
           faturamento: comparisonTotals.faturamento,
           lucro: comparisonTotals.lucro,
           vendas: comparisonTotals.vendas,
           roi: comparisonTotals.roi,
         },
         {
-          periodo: currentPeriodLabel,
+          perÃ­odo: currentPeriodLabel,
           faturamento: totals.faturamento,
           lucro: totals.lucro,
           vendas: totals.vendas,
@@ -380,7 +380,7 @@ function Dashboard() {
       <section className="upload-panel">
         <div>
           <h2>Importar planilha</h2>
-          <p>Envie um Excel com colunas de data, investimento, leads, vendas, faturamento e lucro. Login recomendado; para demo, libere as politicas publicas de importacao.</p>
+          <p>Envie um Excel com colunas de data, investimento, leads, vendas, faturamento e lucro. Login recomendado; para demo, libere as politicas pÃºblicas de importacao.</p>
         </div>
         <div className="auth-shell">
           <button
@@ -413,7 +413,7 @@ function Dashboard() {
                     onChange={(event) => setAuthPassword(event.target.value)}
                   />
                   <button type="button" onClick={signIn}>Entrar</button>
-                  <button type="button" onClick={signUp}>Criar usuario</button>
+                  <button type="button" onClick={signUp}>Criar usuÃ¡rio</button>
                 </>
               )}
             </div>
@@ -527,7 +527,7 @@ function Dashboard() {
           </section>
 
           <section className="comparison-grid">
-            <Panel title="Comparativo de periodo">
+            <Panel title="Comparativo de perÃ­odo">
               {effectiveComparisonMonth && comparisonRecords.length > 0 ? (
                 <>
                   <div className="comparison-header">
@@ -575,7 +575,7 @@ function Dashboard() {
                   </div>
                 </>
               ) : (
-                <p className="empty">Selecione um mes com periodo anterior disponivel para comparar.</p>
+                <p className="empty">Selecione um mes com perÃ­odo anterior disponivel para comparar.</p>
               )}
             </Panel>
 
@@ -597,13 +597,13 @@ function Dashboard() {
                   </p>
                 </div>
               ) : (
-                <p className="empty">A leitura executiva aparece quando existem dois periodos comparaveis.</p>
+                <p className="empty">A leitura executiva aparece quando existem dois perÃ­odos comparaveis.</p>
               )}
               {comparisonChartData.length > 0 && (
                 <ResponsiveContainer width="100%" height={compactChartHeight}>
                   <BarChart data={comparisonChartData}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="periodo" />
+                    <XAxis dataKey="perÃ­odo" />
                     <YAxis />
                     <Tooltip formatter={(value, name) => (name === "vendas" || name === "roi" ? numberTooltip(value, name) : currencyTooltip(value))} />
                     <Legend />
@@ -681,23 +681,23 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
   const features = [
     {
       title: "Upload de planilhas",
-      description: "Importacao de arquivos com dados de campanhas, vendas e indicadores.",
+      description: "ImportaÃ§Ã£o de arquivos com dados de campanhas, vendas e indicadores.",
     },
     {
       title: "Tratamento de dados",
-      description: "Padronizacao e organizacao dos dados antes da analise.",
+      description: "PadronizaÃ§Ã£o e organizaÃ§Ã£o dos dados antes da anÃ¡lise.",
     },
     {
       title: "Dashboard de KPIs",
-      description: "Visualizacao de faturamento, lucro, ROI, CPA, CPL, leads e vendas.",
+      description: "VisualizaÃ§Ã£o de faturamento, lucro, ROI, CPA, CPL, leads e vendas.",
     },
     {
       title: "Alertas operacionais",
-      description: "Identificacao de situacoes criticas, como CPA alto ou ROI abaixo do esperado.",
+      description: "Identificacao de situaÃ§Ãµes crÃ­ticas, como CPA alto ou ROI abaixo do esperado.",
     },
     {
-      title: "Exportacao de logs",
-      description: "Download de registros e informacoes processadas pelo sistema.",
+      title: "ExportaÃ§Ã£o de logs",
+      description: "Download de registros e informaÃ§Ãµes processadas pelo sistema.",
     },
   ];
 
@@ -707,21 +707,21 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
     <main className="landing-page">
       <section className="landing-hero">
         <div className="landing-kicker">
-          <span>Projeto MVP de portfolio</span>
-          <span>Analise de dados e KPIs</span>
+          <span>Projeto MVP de portfÃ³lio</span>
+          <span>AnÃ¡lise de dados e KPIs</span>
         </div>
         <p className="eyebrow">Observabilidade comercial</p>
         <h1>KPI Monitoring Platform</h1>
         <p className="landing-description">
-          Plataforma para monitoramento de KPIs de negocio a partir de planilhas, permitindo importar dados,
-          tratar informacoes, acompanhar indicadores e identificar alertas operacionais.
+          Plataforma para monitoramento de KPIs de negÃ³cio a partir de planilhas, permitindo importar dados,
+          tratar informaÃ§Ãµes, acompanhar indicadores e identificar alertas operacionais.
         </p>
         <div className="landing-actions">
           <button type="button" onClick={onOpenDashboard}>
             Ver Dashboard
           </button>
           <a href="https://github.com/Joao-MF-Jesus/KPI-monitoring-platform" target="_blank" rel="noreferrer">
-            Ver Repositorio no GitHub
+            Ver RepositÃ³rio no GitHub
           </a>
         </div>
         <div className="landing-flow" aria-label="Fluxo do sistema">
@@ -739,7 +739,7 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
           <h2>Problema que o projeto resolve</h2>
         </div>
         <p>
-          Muitas empresas acompanham indicadores em planilhas separadas, dificultando a analise de desempenho.
+          Muitas empresas acompanham indicadores em planilhas separadas, dificultando a anÃ¡lise de desempenho.
           Este projeto centraliza os dados, transforma planilhas em indicadores visuais e ajuda a identificar
           problemas de performance com mais rapidez.
         </p>
@@ -778,15 +778,15 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
           <h2>Por que esse projeto importa?</h2>
         </div>
         <p>
-          Este projeto demonstra conhecimentos em analise de dados, tratamento de planilhas, modelagem de
-          indicadores, integracao com banco de dados, visualizacao de KPIs e construcao de uma aplicacao
-          analitica publicada.
+          Este projeto demonstra conhecimentos em anÃ¡lise de dados, tratamento de planilhas, modelagem de
+          indicadores, integraÃ§Ã£o com banco de dados, visualizaÃ§Ã£o de KPIs e construÃ§Ã£o de uma aplicaÃ§Ã£o
+          analÃ­tica publicada.
         </p>
       </section>
 
       <p className="mvp-note">
-        Projeto em versao MVP, desenvolvido para demonstrar um fluxo completo de analise: upload, tratamento,
-        persistencia, visualizacao e monitoramento de KPIs.
+        Projeto em versÃ£o MVP, desenvolvido para demonstrar um fluxo completo de anÃ¡lise: upload, tratamento,
+        persistÃªncia, visualizaÃ§Ã£o e monitoramento de KPIs.
       </p>
     </main>
   );
@@ -857,6 +857,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <App />
   </React.StrictMode>,
 );
+
 
 
 

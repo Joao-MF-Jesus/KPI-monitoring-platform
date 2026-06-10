@@ -1,29 +1,46 @@
 ﻿# KPI Monitoring Platform
 
-Plataforma MVP para monitoramento de KPIs de negocio a partir de planilhas. O projeto permite importar arquivos Excel, tratar os dados, persistir informacoes no Supabase/PostgreSQL e visualizar indicadores como faturamento, lucro, ROI, CPA, CPL, leads e vendas.
+Plataforma MVP para monitoramento de KPIs de negÃ³cio a partir de planilhas. O projeto permite importar arquivos Excel, tratar os dados, persistir informaÃ§Ãµes no Supabase/PostgreSQL e visualizar indicadores como faturamento, lucro, ROI, CPA, CPL, leads e vendas.
 
-Tambem inclui alertas operacionais e exportacao de dados/logs para apoiar auditoria, acompanhamento e analise de desempenho.
+TambÃ©m inclui alertas operacionais e exportaÃ§Ã£o de dados/logs para apoiar auditoria, acompanhamento e anÃ¡lise de desempenho.
 
 ## Deploy
 
 - Site publicado: https://kpi-monitoring-platform.netlify.app
 - Dashboard: https://kpi-monitoring-platform.netlify.app/#dashboard
+- RepositÃ³rio: https://github.com/Joao-MF-Jesus/KPI-monitoring-platform
+
+## DemonstraÃ§Ã£o
+
+> Prints sugeridos para a apresentaÃ§Ã£o do projeto. Substitua os placeholders abaixo por imagens reais em `docs/images/`.
+
+### Home do projeto
+
+![Home do projeto](docs/images/home.png)
+
+### Dashboard de KPIs
+
+![Dashboard de KPIs](docs/images/dashboard.png)
+
+### Upload de planilha
+
+![Upload de planilha](docs/images/upload.png)
 
 ## Problema que o projeto resolve
 
-Muitas empresas acompanham indicadores em planilhas separadas, dificultando a analise de desempenho. Este projeto centraliza os dados, transforma planilhas em indicadores visuais e ajuda a identificar problemas de performance com mais rapidez.
+Muitas empresas acompanham indicadores em planilhas separadas, dificultando a anÃ¡lise de desempenho. Este projeto centraliza os dados, transforma planilhas em indicadores visuais e ajuda a identificar problemas de performance com mais rapidez.
 
 ## Funcionalidades
 
-- **Upload de planilhas**: importacao de arquivos Excel com dados de campanhas, vendas e indicadores.
-- **Tratamento de dados**: padronizacao de datas, numeros e colunas antes da analise.
-- **Dashboard de KPIs**: visualizacao de faturamento, lucro, ROI, margem, CPA, CPL, leads e vendas.
-- **Comparativo de periodo**: comparacao dos indicadores com meses anteriores ou periodos selecionados.
-- **Leitura executiva**: resumo automatico sobre variacao de faturamento, ROI, margem e ticket medio.
-- **Alertas operacionais**: identificacao de CPA alto, CPL alto e ROI abaixo do esperado.
-- **Exportacao CSV**: download de KPIs, alertas e logs processados.
-- **Tema claro/escuro**: interface adaptavel para diferentes preferencias de visualizacao.
-- **Layout responsivo**: experiencia ajustada para desktop e mobile.
+- **Upload de planilhas**: importaÃ§Ã£o de arquivos Excel com dados de campanhas, vendas e indicadores.
+- **Tratamento de dados**: padronizaÃ§Ã£o de datas, nÃºmeros e colunas antes da anÃ¡lise.
+- **Dashboard de KPIs**: visualizaÃ§Ã£o de faturamento, lucro, ROI, margem, CPA, CPL, leads e vendas.
+- **Comparativo de perÃ­odo**: comparaÃ§Ã£o dos indicadores com meses anteriores ou perÃ­odos selecionados.
+- **Leitura executiva**: resumo automÃ¡tico sobre variaÃ§Ã£o de faturamento, ROI, margem e ticket mÃ©dio.
+- **Alertas operacionais**: identificaÃ§Ã£o de CPA alto, CPL alto e ROI abaixo do esperado.
+- **ExportaÃ§Ã£o CSV**: download de KPIs, alertas e logs processados.
+- **Tema claro/escuro**: interface adaptÃ¡vel para diferentes preferÃªncias de visualizaÃ§Ã£o.
+- **Layout responsivo**: experiÃªncia ajustada para desktop e mobile.
 
 ## Tecnologias utilizadas
 
@@ -40,20 +57,21 @@ Muitas empresas acompanham indicadores em planilhas separadas, dificultando a an
 ## Arquitetura resumida
 
 ```text
-frontend/              Aplicacao React publicada no Netlify
-supabase/              Schema, seed e politicas SQL do banco
+frontend/              AplicaÃ§Ã£o React publicada no Netlify
+supabase/              Schema, seed e polÃ­ticas SQL do banco
 src/                   Pipeline Python/ETL e regras de KPIs
 app/dashboard.py       Dashboard Streamlit legado
 data/                  Estrutura local para planilhas de exemplo
+docs/images/           Prints e imagens de demonstraÃ§Ã£o
 ```
 
 ## Fluxo principal
 
-1. O usuario acessa a aplicacao publicada.
+1. O usuÃ¡rio acessa a aplicaÃ§Ã£o publicada.
 2. Importa uma planilha Excel com dados operacionais.
-3. O sistema le e padroniza os dados.
-4. Os registros tratados sao gravados no Supabase/PostgreSQL.
-5. O dashboard recalcula os KPIs e atualiza graficos, comparativos e alertas.
+3. O sistema lÃª e padroniza os dados.
+4. Os registros tratados sÃ£o gravados no Supabase/PostgreSQL.
+5. O dashboard recalcula os KPIs e atualiza grÃ¡ficos, comparativos e alertas.
 6. Os dados processados podem ser exportados em CSV.
 
 ## Como rodar localmente
@@ -78,16 +96,16 @@ VITE_SUPABASE_PUBLISHABLE_KEY=sua_publishable_key_publica
 Execute os arquivos SQL no Supabase SQL Editor:
 
 1. `supabase/schema.sql`
-2. `supabase/seed.sql` opcional, para dados ficticios
+2. `supabase/seed.sql` opcional, para dados fictÃ­cios
 3. `supabase/authenticated_write_policies.sql` para permitir escrita autenticada
 
-Para ambiente de demonstracao publica, existe tambem:
+Para ambiente de demonstraÃ§Ã£o pÃºblica, existe tambÃ©m:
 
 ```text
 supabase/demo_public_upload_policies.sql
 ```
 
-Esse arquivo libera upload publico para facilitar testes de portfolio. Nao e recomendado para uso em producao.
+Esse arquivo libera upload pÃºblico para facilitar testes de portfÃ³lio. NÃ£o Ã© recomendado para uso em produÃ§Ã£o.
 
 ### Python / ETL legado
 
@@ -114,29 +132,29 @@ Invest. Total
 Lead - Geral
 Vendas
 Faturamento Bruto
-Lucro Liquido
+Lucro LÃ­quido
 ```
 
-Tambem ha suporte para variacoes comuns como `Data`, `Investimento`, `Leads`, `Faturamento` e `Lucro`.
+TambÃ©m hÃ¡ suporte para variaÃ§Ãµes comuns como `Data`, `Investimento`, `Leads`, `Faturamento` e `Lucro`.
 
-## Seguranca e dados
+## SeguranÃ§a e dados
 
-- Nao versionar `.env`
-- Nao expor service role key no frontend
+- NÃ£o versionar `.env`
+- NÃ£o expor service role key no frontend
 - Usar apenas publishable/anon key no cliente
-- Nao versionar bancos locais `.db`
-- Nao versionar logs reais
-- Nao versionar planilhas reais de empresas
-- Usar dados ficticios em demonstracoes publicas
+- NÃ£o versionar bancos locais `.db`
+- NÃ£o versionar logs reais
+- NÃ£o versionar planilhas reais de empresas
+- Usar dados fictÃ­cios em demonstraÃ§Ãµes pÃºblicas
 
 ## Status do projeto
 
-Projeto em versao MVP, desenvolvido para demonstrar um fluxo completo de analise: upload, tratamento, persistencia, visualizacao e monitoramento de KPIs.
+Projeto em versÃ£o MVP, desenvolvido para demonstrar um fluxo completo de anÃ¡lise: upload, tratamento, persistÃªncia, visualizaÃ§Ã£o e monitoramento de KPIs.
 
-## Proximos passos
+## PrÃ³ximos passos
 
-- Criar autenticacao mais robusta para ambientes privados
-- Adicionar historico de importacoes
+- Criar autenticaÃ§Ã£o mais robusta para ambientes privados
+- Adicionar histÃ³rico de importaÃ§Ãµes
 - Validar planilhas com feedback linha a linha
 - Criar testes automatizados para o parser de planilhas
-- Evoluir permissoes por usuario/organizacao
+- Evoluir permissÃµes por usuÃ¡rio/organizaÃ§Ã£o
