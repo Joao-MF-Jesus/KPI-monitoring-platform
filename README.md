@@ -16,24 +16,6 @@ TambÃ©m inclui alertas operacionais e exportaÃ§Ã£o de dados/logs para apoi
 
 ---
 
-## DemonstraÃ§Ã£o
-
-> Prints sugeridos para apresentaÃ§Ã£o do projeto. As imagens podem ser adicionadas em `docs/images/`.
-
-### Home do projeto
-
-![Home do projeto](docs/images/home.png)
-
-### Dashboard de KPIs
-
-![Dashboard de KPIs](docs/images/dashboard.png)
-
-### Upload de planilha
-
-![Upload de planilha](docs/images/upload.png)
-
----
-
 ## Problema que o projeto resolve
 
 Muitas empresas acompanham indicadores em planilhas separadas, dificultando a anÃ¡lise de desempenho.
@@ -78,7 +60,6 @@ supabase/              Schema, seed e polÃ­ticas SQL do banco
 src/                   Pipeline Python/ETL e regras de KPIs
 app/dashboard.py       Dashboard Streamlit legado
 data/                  Estrutura local para planilhas de exemplo
-docs/images/           Prints e imagens de demonstraÃ§Ã£o
 ```
 
 ---
@@ -207,3 +188,12 @@ Projeto em versÃ£o MVP, desenvolvido para demonstrar um fluxo completo de anÃ
 - Validar planilhas com feedback linha a linha.
 - Criar testes automatizados para o parser de planilhas.
 - Evoluir permissÃµes por usuÃ¡rio/organizaÃ§Ã£o.
+
+---
+
+## Autor
+
+Desenvolvido por **JoÃ£o Marcelo Ferreira de Jesus**.
+
+- GitHub: https://github.com/Joao-MF-Jesus
+- LinkedIn: https://www.linkedin.com/in/joao-marcelo-f-jesus

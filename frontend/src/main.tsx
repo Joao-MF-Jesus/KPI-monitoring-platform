@@ -332,7 +332,7 @@ function Dashboard() {
     .slice(0, 5);
 
   return (
-    <main>
+    <main id="dashboard">
       <header className="app-header">
         <div>
           <p className="eyebrow">Observabilidade comercial</p>
@@ -681,11 +681,11 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
   const features = [
     {
       title: "Upload de planilhas",
-      description: "ImportaÃ§Ã£o de arquivos com dados de campanhas, vendas e indicadores.",
+      description: "ImportaÃ§Ã£o de arquivos Excel com dados de campanhas, vendas e indicadores de negÃ³cio.",
     },
     {
       title: "Tratamento de dados",
-      description: "PadronizaÃ§Ã£o e organizaÃ§Ã£o dos dados antes da anÃ¡lise.",
+      description: "PadronizaÃ§Ã£o e organizaÃ§Ã£o dos dados antes da anÃ¡lise e persistÃªncia.",
     },
     {
       title: "Dashboard de KPIs",
@@ -693,11 +693,11 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
     },
     {
       title: "Alertas operacionais",
-      description: "Identificacao de situaÃ§Ãµes crÃ­ticas, como CPA alto ou ROI abaixo do esperado.",
+      description: "IdentificaÃ§Ã£o de situaÃ§Ãµes crÃ­ticas, como CPA alto ou ROI abaixo do esperado.",
     },
     {
-      title: "ExportaÃ§Ã£o de logs",
-      description: "Download de registros e informaÃ§Ãµes processadas pelo sistema.",
+      title: "ExportaÃ§Ã£o de dados",
+      description: "Download de KPIs, alertas e logs processados para auditoria e acompanhamento.",
     },
   ];
 
@@ -708,7 +708,7 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
       <section className="landing-hero">
         <div className="landing-kicker">
           <span>Projeto MVP de portfÃ³lio</span>
-          <span>AnÃ¡lise de dados e KPIs</span>
+          <span>Dados, BI e aplicaÃ§Ã£o web</span>
         </div>
         <p className="eyebrow">Observabilidade comercial</p>
         <h1>KPI Monitoring Platform</h1>
@@ -727,7 +727,7 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
         <div className="landing-flow" aria-label="Fluxo do sistema">
           <span>Upload</span>
           <span>Tratamento</span>
-          <span>Banco de dados</span>
+          <span>Supabase/PostgreSQL</span>
           <span>Dashboard</span>
           <span>Alertas</span>
         </div>
@@ -774,7 +774,7 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
 
       <section className="landing-section landing-importance">
         <div>
-          <span className="section-label">Valor tecnico</span>
+          <span className="section-label">Valor tÃ©cnico</span>
           <h2>Por que esse projeto importa?</h2>
         </div>
         <p>
@@ -857,6 +857,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <App />
   </React.StrictMode>,
 );
+
 
 
 
