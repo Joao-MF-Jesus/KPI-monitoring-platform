@@ -231,7 +231,15 @@ function App() {
       email: authEmail,
       password: authPassword,
     });
-    setAuthMessage(signInError ? translateSupabaseError(signInError.message) : "Login realizado.");
+    if (signInError) {
+      setAuthMessage(translateSupabaseError(signInError.message));
+      return;
+    }
+
+    setAuthEmail("");
+    setAuthPassword("");
+    setShowAuthControls(false);
+    setAuthMessage("Login realizado.");
   }
 
   async function signUp() {
@@ -254,6 +262,9 @@ function App() {
       return;
     }
 
+    setAuthEmail("");
+    setAuthPassword("");
+    setShowAuthControls(Boolean(data.session));
     setAuthMessage(data.session ? "Usuario criado e logado." : "Usuario criado. Agora clique em Entrar.");
   }
 
@@ -714,6 +725,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <App />
   </React.StrictMode>,
 );
+
 
 
 
