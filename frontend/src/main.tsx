@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import ReactDOM from "react-dom/client";
 import type { Session } from "@supabase/supabase-js";
 import {
@@ -71,6 +71,32 @@ function currencyDelta(current: number, previous: number) {
   return `${delta >= 0 ? "+" : "-"}${formatCurrency(Math.abs(delta))}`;
 }
 
+function translateSupabaseError(message: string) {
+  const normalized = message.toLowerCase();
+
+  if (normalized.includes("email not confirmed")) {
+    return "Email ainda nao confirmado. Confirme pelo link recebido ou desative a confirmacao de email no Supabase.";
+  }
+
+  if (normalized.includes("signup") || normalized.includes("signups")) {
+    return "Cadastro bloqueado no Supabase. Confira Authentication > Sign In / Providers > Allow new users to sign up.";
+  }
+
+  if (normalized.includes("invalid login credentials")) {
+    return "Email ou senha incorretos.";
+  }
+
+  if (normalized.includes("row-level security") || normalized.includes("permission denied")) {
+    return "Sem permissao para gravar no banco. Para portfolio/demo, rode o SQL em supabase/demo_public_upload_policies.sql.";
+  }
+
+  if (normalized.includes("invalid api key")) {
+    return "Chave do Supabase invalida. Confira as variaveis VITE_SUPABASE_URL e VITE_SUPABASE_PUBLISHABLE_KEY no Netlify.";
+  }
+
+  return message;
+}
+
 function App() {
   const [records, setRecords] = React.useState<KPIRecord[]>([]);
   const [incidents, setIncidents] = React.useState<Incident[]>([]);
@@ -124,13 +150,8 @@ function App() {
   }, [loadData]);
 
   async function handleSpreadsheetUpload(file: File) {
-    if (!session) {
-      setImportStatus("Entre com seu usuario antes de importar uma planilha.");
-      return;
-    }
-
     setImporting(true);
-    setImportStatus("Lendo planilha...");
+    setImportStatus(session ? "Lendo planilha..." : "Lendo planilha em modo demo...");
 
     try {
       const result = await parseSpreadsheet(file);
@@ -170,28 +191,48 @@ function App() {
       );
       await loadData();
     } catch (err) {
-      setImportStatus(err instanceof Error ? err.message : "Erro ao importar planilha.");
+      const message = err instanceof Error ? err.message : "Erro ao importar planilha.";
+      setImportStatus(translateSupabaseError(message));
     } finally {
       setImporting(false);
     }
   }
 
   async function signIn() {
+    if (!authEmail || !authPassword) {
+      setAuthMessage("Preencha email e senha.");
+      return;
+    }
+
     setAuthMessage("Entrando...");
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email: authEmail,
       password: authPassword,
     });
-    setAuthMessage(signInError ? signInError.message : "Login realizado.");
+    setAuthMessage(signInError ? translateSupabaseError(signInError.message) : "Login realizado.");
   }
 
   async function signUp() {
+    if (!authEmail || authPassword.length < 6) {
+      setAuthMessage("Use um email valido e senha com pelo menos 6 caracteres.");
+      return;
+    }
+
     setAuthMessage("Criando usuario...");
-    const { error: signUpError } = await supabase.auth.signUp({
+    const { data, error: signUpError } = await supabase.auth.signUp({
       email: authEmail,
       password: authPassword,
+      options: {
+        emailRedirectTo: window.location.origin,
+      },
     });
-    setAuthMessage(signUpError ? signUpError.message : "Usuario criado. Confira seu email se a confirmacao estiver ativa.");
+
+    if (signUpError) {
+      setAuthMessage(translateSupabaseError(signUpError.message));
+      return;
+    }
+
+    setAuthMessage(data.session ? "Usuario criado e logado." : "Usuario criado. Agora clique em Entrar.");
   }
 
   async function signOut() {
@@ -306,7 +347,7 @@ function App() {
       <section className="upload-panel">
         <div>
           <h2>Importar planilha</h2>
-          <p>Envie um Excel com colunas de data, investimento, leads, vendas, faturamento e lucro. Login necessario para gravar no banco.</p>
+          <p>Envie um Excel com colunas de data, investimento, leads, vendas, faturamento e lucro. Login recomendado; para demo, libere as politicas publicas de importacao.</p>
         </div>
         <div className="auth-panel">
           {session ? (
@@ -343,7 +384,7 @@ function App() {
             <input
               type="file"
               accept=".xlsx,.xls"
-              disabled={importing || !session}
+              disabled={importing}
               onChange={(event) => {
                 const file = event.target.files?.[0];
                 if (file) {
@@ -639,3 +680,4 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <App />
   </React.StrictMode>,
 );
+
