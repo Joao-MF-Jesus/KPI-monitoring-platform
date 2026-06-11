@@ -194,7 +194,6 @@ function Dashboard() {
         setSelectedMonth("all");
         setSelectedSource("all");
         setComparisonMonth("previous");
-        setError("");
         setImportStatus("Modo demo: a planilha foi carregada apenas nesta sessÃ£o. A base principal nÃ£o foi alterada.");
         return;
       }
@@ -856,6 +855,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <App />
   </React.StrictMode>,
 );
+
 
 
 
