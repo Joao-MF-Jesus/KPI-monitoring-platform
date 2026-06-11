@@ -101,16 +101,8 @@ function hasNoIdentities(data: { user?: { identities?: unknown[] } | null } | nu
 function translateSupabaseError(message: string) {
   const normalized = message.toLowerCase();
 
-  if (isDuplicateEmailError(message)) {
-    return "Este e-mail jÃ¡ possui cadastro. Tente entrar com sua senha.";
-  }
-
   if (normalized.includes("email not confirmed")) {
     return "E-mail ainda nÃ£o confirmado. Verifique sua caixa de entrada antes de fazer login.";
-  }
-
-  if (normalized.includes("signup") || normalized.includes("signups")) {
-    return "Cadastro bloqueado no Supabase. Confira se novos cadastros estÃ£o habilitados.";
   }
 
   if (normalized.includes("invalid login credentials")) {
@@ -118,7 +110,7 @@ function translateSupabaseError(message: string) {
   }
 
   if (normalized.includes("row-level security") || normalized.includes("permission denied") || normalized.includes("permission")) {
-    return "VocÃª nÃ£o tem permissÃ£o para salvar dados no banco. FaÃ§a login como administrador ou use o modo demo local.";
+    return "Modo pÃºblico: visitantes nÃ£o podem alterar a base principal. FaÃ§a login como administrador ou teste a planilha em modo demo local.";
   }
 
   if (normalized.includes("invalid api key")) {
@@ -215,9 +207,7 @@ function Dashboard() {
         setSelectedMonth("all");
         setSelectedSource("all");
         setError("");
-        setImportStatus(
-          "Planilha carregada em modo demo. Os dados foram atualizados apenas nesta sessÃ£o e nÃ£o foram salvos no banco.",
-        );
+        setImportStatus("Modo demo: a planilha foi carregada apenas nesta sessÃ£o. A base principal nÃ£o foi alterada.");
         return;
       }
 
@@ -427,13 +417,13 @@ function Dashboard() {
       <section className="upload-panel">
         <div>
           <h2>Importar planilha</h2>
-          <p>Envie um Excel com colunas de data, investimento, leads, vendas, faturamento e lucro. Login recomendado; para demo, libere as politicas pÃºblicas de importacao.</p>
+          <p>Envie um Excel com colunas de data, investimento, leads, vendas, faturamento e lucro.</p>
         </div>
         <div className="auth-shell">
           <p className="auth-helper">
             {session
-              ? `Logado como: ${session.user.email}. Uploads serÃ£o salvos no Supabase.`
-              : "Visitantes podem testar planilhas em modo demo. Para salvar no banco, faÃ§a login como administrador."}
+              ? "Logado como administrador. Uploads serÃ£o salvos no Supabase."
+              : "Visitantes podem testar planilhas em modo demo. Apenas administradores podem salvar alteraÃ§Ãµes no banco."}
           </p>
           <button
             className="auth-toggle"
@@ -441,7 +431,7 @@ function Dashboard() {
             onClick={() => setShowAuthControls((current) => !current)}
             aria-expanded={showAuthControls}
           >
-            {session ? session.user.email : "Login administrativo"}
+            {session ? "Administrador logado" : "Login administrativo"}
           </button>
           {(showAuthControls || session) && (
             <div className="auth-panel">
@@ -465,7 +455,6 @@ function Dashboard() {
                     onChange={(event) => setAuthPassword(event.target.value)}
                   />
                   <button type="button" onClick={signIn}>Entrar</button>
-                  <button type="button" onClick={signUp}>Criar usuÃ¡rio</button>
                 </>
               )}
             </div>
@@ -909,6 +898,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <App />
   </React.StrictMode>,
 );
+
 
 
 
