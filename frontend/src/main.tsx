@@ -89,7 +89,7 @@ function translateSupabaseError(message: string) {
   const normalized = message.toLowerCase();
 
   if (normalized.includes("email not confirmed")) {
-    return "E-mail ainda nÃ£o confirmado. Verifique sua caixa de entrada antes de fazer login.";
+    return "E-mail ainda não confirmado. Verifique sua caixa de entrada antes de fazer login.";
   }
 
   if (normalized.includes("invalid login credentials")) {
@@ -97,11 +97,11 @@ function translateSupabaseError(message: string) {
   }
 
   if (normalized.includes("row-level security") || normalized.includes("permission denied") || normalized.includes("permission")) {
-    return "Modo pÃºblico: visitantes nÃ£o podem alterar a base principal. FaÃ§a login como administrador ou teste a planilha em modo demo local.";
+    return "Modo público: visitantes não podem alterar a base principal. Faça login como administrador ou teste a planilha em modo demo local.";
   }
 
   if (normalized.includes("invalid api key")) {
-    return "Chave do Supabase invÃ¡lida. Confira as variÃ¡veis VITE_SUPABASE_URL e VITE_SUPABASE_PUBLISHABLE_KEY no Netlify.";
+    return "Chave do Supabase inválida. Confira as variáveis VITE_SUPABASE_URL e VITE_SUPABASE_PUBLISHABLE_KEY no Netlify.";
   }
 
   return message;
@@ -174,7 +174,7 @@ function Dashboard() {
       const result = await parseSpreadsheet(file);
 
       if (!result.records.length) {
-        setImportStatus("Nenhum registro vÃ¡lido encontrado. Confira os nomes das colunas.");
+        setImportStatus("Nenhum registro válido encontrado. Confira os nomes das colunas.");
         return;
       }
 
@@ -194,7 +194,7 @@ function Dashboard() {
         setSelectedMonth("all");
         setSelectedSource("all");
         setComparisonMonth("previous");
-        setImportStatus("Modo demo: a planilha foi carregada apenas nesta sessÃ£o. A base principal nÃ£o foi alterada.");
+        setImportStatus("Modo demo: a planilha foi carregada apenas nesta sessão. A base principal não foi alterada.");
         return;
       }
 
@@ -224,7 +224,7 @@ function Dashboard() {
       }
 
       setImportStatus(
-        `ImportaÃ§Ã£o concluÃda: ${result.records.length} registros, ${result.incidents.length} alertas, ${result.sheets.length} abas.`,
+        `Importação concluída: ${result.records.length} registros, ${result.incidents.length} alertas, ${result.sheets.length} abas.`,
       );
       await loadData();
     } catch (err) {
@@ -258,7 +258,7 @@ function Dashboard() {
 
   async function signOut() {
     await supabase.auth.signOut();
-    setAuthMessage("SessÃ£o encerrada.");
+    setAuthMessage("Sessão encerrada.");
   }
 
   const months = React.useMemo(() => Array.from(new Set(records.map((record) => getMonth(record.data)))).sort(), [records]);
@@ -376,10 +376,10 @@ function Dashboard() {
               <>
                 Logado como administrador: {session.user.email}
                 <br />
-                Uploads serÃ£o salvos no Supabase.
+                Uploads serão salvos no Supabase.
               </>
             ) : (
-              "Visitantes podem testar planilhas em modo demo. Apenas administradores podem salvar alteraÃ§Ãµes no banco."
+              "Visitantes podem testar planilhas em modo demo. Apenas administradores podem salvar alterações no banco."
             )}
           </p>
           <button
@@ -679,22 +679,22 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
   const features = [
     {
       title: "Upload de planilhas",
-      description: "ImportaÃ§Ã£o de arquivos Excel com dados de campanhas, vendas e indicadores de negÃ³cio.",
+      description: "Importação de arquivos Excel com dados de campanhas, vendas e indicadores de negócio.",
     },
     {
       title: "Tratamento de dados",
-      description: "PadronizaÃ§Ã£o e organizaÃ§Ã£o dos dados antes da anÃ¡lise e persistÃªncia.",
+      description: "Padronização e organização dos dados antes da análise e persistência.",
     },
     {
       title: "Dashboard de KPIs",
-      description: "VisualizaÃ§Ã£o de faturamento, lucro, ROI, CPA, CPL, leads e vendas.",
+      description: "Visualização de faturamento, lucro, ROI, CPA, CPL, leads e vendas.",
     },
     {
       title: "Alertas operacionais",
-      description: "IdentificaÃ§Ã£o de situaÃ§Ãµes crÃticas, como CPA alto ou ROI abaixo do esperado.",
+      description: "Identificação de situações críticas, como CPA alto ou ROI abaixo do esperado.",
     },
     {
-      title: "ExportaÃ§Ã£o de dados",
+      title: "Exportação de dados",
       description: "Download de KPIs, alertas e logs processados para auditoria e acompanhamento.",
     },
   ];
@@ -705,21 +705,21 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
     <main className="landing-page">
       <section className="landing-hero">
         <div className="landing-kicker">
-          <span>Projeto MVP de portfÃ³lio</span>
-          <span>Dados, BI e aplicaÃ§Ã£o web</span>
+          <span>Projeto MVP de portfólio</span>
+          <span>Dados, BI e aplicação web</span>
         </div>
         <p className="eyebrow">Observabilidade comercial</p>
         <h1>KPI Monitoring Platform</h1>
         <p className="landing-description">
-          Plataforma para monitoramento de KPIs de negÃ³cio a partir de planilhas, permitindo importar dados,
-          tratar informaÃ§Ãµes, acompanhar indicadores e identificar alertas operacionais.
+          Plataforma para monitoramento de KPIs de negócio a partir de planilhas, permitindo importar dados,
+          tratar informações, acompanhar indicadores e identificar alertas operacionais.
         </p>
         <div className="landing-actions">
           <button type="button" onClick={onOpenDashboard}>
             Ver Dashboard
           </button>
           <a href="https://github.com/Joao-MF-Jesus/KPI-monitoring-platform" target="_blank" rel="noreferrer">
-            Ver RepositÃ³rio no GitHub
+            Ver Repositório no GitHub
           </a>
         </div>
         <div className="landing-flow" aria-label="Fluxo do sistema">
@@ -737,7 +737,7 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
           <h2>Problema que o projeto resolve</h2>
         </div>
         <p>
-          Muitas empresas acompanham indicadores em planilhas separadas, dificultando a anÃ¡lise de desempenho.
+          Muitas empresas acompanham indicadores em planilhas separadas, dificultando a análise de desempenho.
           Este projeto centraliza os dados, transforma planilhas em indicadores visuais e ajuda a identificar
           problemas de performance com mais rapidez.
         </p>
@@ -772,19 +772,19 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
 
       <section className="landing-section landing-importance">
         <div>
-          <span className="section-label">Valor tÃ©cnico</span>
+          <span className="section-label">Valor técnico</span>
           <h2>Por que esse projeto importa?</h2>
         </div>
         <p>
-          Este projeto demonstra conhecimentos em anÃ¡lise de dados, tratamento de planilhas, modelagem de
-          indicadores, integraÃ§Ã£o com banco de dados, visualizaÃ§Ã£o de KPIs e construÃ§Ã£o de uma aplicaÃ§Ã£o
-          analÃtica publicada.
+          Este projeto demonstra conhecimentos em análise de dados, tratamento de planilhas, modelagem de
+          indicadores, integração com banco de dados, visualização de KPIs e construção de uma aplicação
+          analítica publicada.
         </p>
       </section>
 
       <p className="mvp-note">
-        Projeto em versÃ£o MVP, desenvolvido para demonstrar um fluxo completo de anÃ¡lise: upload, tratamento,
-        persistÃªncia, visualizaÃ§Ã£o e monitoramento de KPIs.
+        Projeto em versão MVP, desenvolvido para demonstrar um fluxo completo de análise: upload, tratamento,
+        persistência, visualização e monitoramento de KPIs.
       </p>
     </main>
   );
