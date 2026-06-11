@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import type { Session } from "@supabase/supabase-js";
 import {
@@ -224,7 +224,7 @@ function Dashboard() {
       }
 
       setImportStatus(
-        `ImportaÃ§Ã£o concluÃ­da: ${result.records.length} registros, ${result.incidents.length} alertas, ${result.sheets.length} abas.`,
+        `ImportaÃ§Ã£o concluÃda: ${result.records.length} registros, ${result.incidents.length} alertas, ${result.sheets.length} abas.`,
       );
       await loadData();
     } catch (err) {
@@ -293,14 +293,14 @@ function Dashboard() {
   const comparisonChartData = effectiveComparisonMonth
     ? [
         {
-          perÃ­odo: effectiveComparisonMonth,
+          periodo: effectiveComparisonMonth,
           faturamento: comparisonTotals.faturamento,
           lucro: comparisonTotals.lucro,
           vendas: comparisonTotals.vendas,
           roi: comparisonTotals.roi,
         },
         {
-          perÃ­odo: currentPeriodLabel,
+          periodo: currentPeriodLabel,
           faturamento: totals.faturamento,
           lucro: totals.lucro,
           vendas: totals.vendas,
@@ -525,7 +525,7 @@ function Dashboard() {
           </section>
 
           <section className="comparison-grid">
-            <Panel title="Comparativo de perÃ­odo">
+            <Panel title="Comparativo de periodo">
               {effectiveComparisonMonth && comparisonRecords.length > 0 ? (
                 <>
                   <div className="comparison-header">
@@ -573,7 +573,7 @@ function Dashboard() {
                   </div>
                 </>
               ) : (
-                <p className="empty">Selecione um mes com perÃ­odo anterior disponivel para comparar.</p>
+                <p className="empty">Selecione um mes com periodo anterior disponivel para comparar.</p>
               )}
             </Panel>
 
@@ -595,13 +595,13 @@ function Dashboard() {
                   </p>
                 </div>
               ) : (
-                <p className="empty">A leitura executiva aparece quando existem dois perÃ­odos comparaveis.</p>
+                <p className="empty">A leitura executiva aparece quando existem dois periodos comparaveis.</p>
               )}
               {comparisonChartData.length > 0 && (
                 <ResponsiveContainer width="100%" height={compactChartHeight}>
                   <BarChart data={comparisonChartData}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="perÃ­odo" />
+                    <XAxis dataKey="periodo" />
                     <YAxis />
                     <Tooltip formatter={(value, name) => (name === "vendas" || name === "roi" ? numberTooltip(value, name) : currencyTooltip(value))} />
                     <Legend />
@@ -691,7 +691,7 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
     },
     {
       title: "Alertas operacionais",
-      description: "IdentificaÃ§Ã£o de situaÃ§Ãµes crÃ­ticas, como CPA alto ou ROI abaixo do esperado.",
+      description: "IdentificaÃ§Ã£o de situaÃ§Ãµes crÃticas, como CPA alto ou ROI abaixo do esperado.",
     },
     {
       title: "ExportaÃ§Ã£o de dados",
@@ -778,7 +778,7 @@ function LandingPage({ onOpenDashboard }: { onOpenDashboard: () => void }) {
         <p>
           Este projeto demonstra conhecimentos em anÃ¡lise de dados, tratamento de planilhas, modelagem de
           indicadores, integraÃ§Ã£o com banco de dados, visualizaÃ§Ã£o de KPIs e construÃ§Ã£o de uma aplicaÃ§Ã£o
-          analÃ­tica publicada.
+          analÃtica publicada.
         </p>
       </section>
 
