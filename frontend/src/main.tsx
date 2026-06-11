@@ -85,19 +85,6 @@ function useIsMobile() {
   return isMobile;
 }
 
-function isValidEmail(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
-}
-
-function isDuplicateEmailError(message: string) {
-  const normalized = message.toLowerCase();
-  return normalized.includes("user already registered") || normalized.includes("already registered") || normalized.includes("already exists");
-}
-
-function hasNoIdentities(data: { user?: { identities?: unknown[] } | null } | null) {
-  return Boolean(data?.user && Array.isArray(data.user.identities) && data.user.identities.length === 0);
-}
-
 function translateSupabaseError(message: string) {
   const normalized = message.toLowerCase();
 
@@ -269,42 +256,6 @@ function Dashboard() {
     setAuthMessage("Login realizado.");
   }
 
-  async function signUp() {
-    const email = authEmail.trim();
-
-    if (!isValidEmail(email)) {
-      setAuthMessage("Informe um e-mail vÃ¡lido.");
-      return;
-    }
-
-    if (authPassword.length < 6) {
-      setAuthMessage("Use uma senha com pelo menos 6 caracteres.");
-      return;
-    }
-
-    setAuthMessage("Criando usuÃ¡rio...");
-    const { data, error: signUpError } = await supabase.auth.signUp({
-      email,
-      password: authPassword,
-      options: {
-        emailRedirectTo: window.location.origin,
-      },
-    });
-
-    if (signUpError) {
-      setAuthMessage(translateSupabaseError(signUpError.message));
-      return;
-    }
-
-    if (hasNoIdentities(data)) {
-      setAuthMessage("Este e-mail jÃ¡ possui cadastro. Tente entrar com sua senha.");
-      return;
-    }
-
-    setAuthPassword("");
-    setShowAuthControls(Boolean(data.session));
-    setAuthMessage(data.session ? "UsuÃ¡rio criado e Login realizado." : "Cadastro criado. Verifique seu e-mail antes de fazer login.");
-  }
   async function signOut() {
     await supabase.auth.signOut();
     setAuthMessage("SessÃ£o encerrada.");
@@ -421,9 +372,15 @@ function Dashboard() {
         </div>
         <div className="auth-shell">
           <p className="auth-helper">
-            {session
-              ? "Logado como administrador. Uploads serÃ£o salvos no Supabase."
-              : "Visitantes podem testar planilhas em modo demo. Apenas administradores podem salvar alteraÃ§Ãµes no banco."}
+            {session ? (
+              <>
+                Logado como administrador: {session.user.email}
+                <br />
+                Uploads serÃ£o salvos no Supabase.
+              </>
+            ) : (
+              "Visitantes podem testar planilhas em modo demo. Apenas administradores podem salvar alteraÃ§Ãµes no banco."
+            )}
           </p>
           <button
             className="auth-toggle"
@@ -898,6 +855,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <App />
   </React.StrictMode>,
 );
+
 
 
 
