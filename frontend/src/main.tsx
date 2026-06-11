@@ -178,17 +178,17 @@ function Dashboard() {
         return;
       }
 
-      const timestamp = Date.now();
-      const localRecords = result.records.map((record, index) => ({
-        ...record,
-        id: timestamp + index,
-      })) as KPIRecord[];
-      const localIncidents = result.incidents.map((incident, index) => ({
-        ...incident,
-        id: timestamp + result.records.length + index,
-      })) as Incident[];
-
       if (!session) {
+        const timestamp = Date.now();
+        const localRecords = result.records.map((record, index) => ({
+          ...record,
+          id: timestamp + index,
+        })) as KPIRecord[];
+        const localIncidents = result.incidents.map((incident, index) => ({
+          ...incident,
+          id: timestamp + result.records.length + index,
+        })) as Incident[];
+
         setRecords(localRecords);
         setIncidents(localIncidents);
         setSelectedMonth("all");
@@ -856,6 +856,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <App />
   </React.StrictMode>,
 );
+
 
 
 
