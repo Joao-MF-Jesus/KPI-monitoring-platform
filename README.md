@@ -1,10 +1,10 @@
 # KPI Monitoring Platform
 
-Plataforma MVP para monitoramento de KPIs de negÃ³cio a partir de planilhas Excel.
+Plataforma MVP para monitoramento de KPIs de negócio a partir de planilhas Excel.
 
-O projeto permite importar arquivos, tratar dados comerciais, persistir informaÃ§Ãµes no Supabase/PostgreSQL e visualizar indicadores como faturamento, lucro, ROI, margem, CPA, CPL, leads e vendas.
+O projeto permite importar arquivos, tratar dados comerciais, persistir informações no Supabase/PostgreSQL e visualizar indicadores como faturamento, lucro, ROI, margem, CPA, CPL, leads e vendas.
 
-A aplicaÃ§Ã£o foi desenvolvida como projeto de portfÃ³lio para demonstrar um fluxo completo de anÃ¡lise de dados e BI: upload, tratamento, persistÃªncia, visualizaÃ§Ã£o, alertas operacionais e exportaÃ§Ã£o de informaÃ§Ãµes processadas.
+A aplicação foi desenvolvida como projeto de portfólio para demonstrar um fluxo completo de análise de dados e BI: upload, tratamento, persistência, visualização, alertas operacionais e exportação de informações processadas.
 
 ---
 
@@ -12,19 +12,21 @@ A aplicaÃ§Ã£o foi desenvolvida como projeto de portfÃ³lio para demonstrar 
 
 - Deploy: https://kpi-monitoring-platform.netlify.app
 - Dashboard: https://kpi-monitoring-platform.netlify.app/#dashboard
-- RepositÃ³rio: https://github.com/Joao-MF-Jesus/KPI-monitoring-platform
+- Repositório: https://github.com/Joao-MF-Jesus/KPI-monitoring-platform
 
 ---
 
-## DemonstraÃ§Ã£o
+## Demonstração
 
-### Dashboard em modo demo
+Os prints do projeto devem ser armazenados na pasta `docs/`.
 
-![Dashboard em modo demo](docs/dashboard-demo.jpeg)
+### Dashboard principal
 
-### Comparativo de perÃ­odo
+![Dashboard principal](docs/dashboard-demo.jpeg)
 
-![Comparativo de perÃ­odo](docs/comparativo-periodo.jpeg)
+### Comparativo de período
+
+![Comparativo de período](docs/comparativo-periodo.jpeg)
 
 ### Alertas operacionais
 
@@ -34,9 +36,9 @@ A aplicaÃ§Ã£o foi desenvolvida como projeto de portfÃ³lio para demonstrar 
 
 ## Problema resolvido
 
-Muitas empresas acompanham indicadores comerciais em planilhas separadas, o que dificulta a anÃ¡lise de desempenho, a comparaÃ§Ã£o entre perÃ­odos e a identificaÃ§Ã£o rÃ¡pida de problemas operacionais.
+Muitas empresas acompanham indicadores comerciais em planilhas separadas, o que dificulta a análise de desempenho, a comparação entre períodos e a identificação rápida de problemas operacionais.
 
-Este projeto centraliza os dados, transforma planilhas em indicadores visuais e ajuda a acompanhar a evoluÃ§Ã£o de mÃ©tricas importantes para o negÃ³cio, aproximando o fluxo de trabalho de uma soluÃ§Ã£o de BI aplicada.
+Este projeto centraliza os dados, transforma planilhas em indicadores visuais e ajuda a acompanhar a evolução de métricas importantes para o negócio, aproximando o fluxo de trabalho de uma solução de BI aplicada.
 
 ---
 
@@ -44,14 +46,14 @@ Este projeto centraliza os dados, transforma planilhas em indicadores visuais e 
 
 - Upload de planilhas Excel com dados comerciais.
 - Modo demo para visitantes, sem alterar a base real do Supabase.
-- Login administrativo para persistÃªncia de dados.
+- Login administrativo para persistência de dados.
 - Salvamento no Supabase para administrador autenticado.
 - Dashboard com KPIs de faturamento, lucro, ROI, margem, CPA, CPL, leads e vendas.
-- Comparativo entre perÃ­odos para anÃ¡lise de evoluÃ§Ã£o.
+- Comparativo entre períodos para análise de evolução.
 - Leitura executiva com resumo dos principais resultados.
 - Alertas operacionais para CPA, CPL e ROI.
-- ExportaÃ§Ã£o de KPIs, alertas e logs processados.
-- Interface publicada e acessÃ­vel via Netlify.
+- Exportação de KPIs, alertas e logs processados.
+- Interface publicada e acessível via Netlify.
 
 ---
 
@@ -74,7 +76,7 @@ Este projeto centraliza os dados, transforma planilhas em indicadores visuais e 
 ## Arquitetura resumida
 
 ```text
-frontend/              AplicaÃ§Ã£o React publicada no Netlify
+frontend/              Aplicação React publicada no Netlify
 frontend/src/          Interface, parser da planilha e dashboard principal
 supabase/              Schema, seed e policies de acesso ao banco
 src/                   Pipeline Python/ETL e regras auxiliares de KPIs
@@ -82,27 +84,27 @@ app/dashboard.py       Dashboard Streamlit legado
 logs/                  Registros gerados no processamento local
 ```
 
-A versÃ£o publicada usa o frontend React com Supabase como base de dados. A estrutura Python/Streamlit permanece no repositÃ³rio como parte da evoluÃ§Ã£o do projeto e demonstra o fluxo inicial de anÃ¡lise e prototipaÃ§Ã£o.
+A versão publicada usa o frontend React com Supabase como base de dados. A estrutura Python/Streamlit permanece no repositório como parte da evolução do projeto e demonstra o fluxo inicial de análise e prototipação.
 
 ---
 
 ## Fluxo principal
 
-1. O usuÃ¡rio acessa a landing page do projeto.
-2. O visitante pode visualizar o dashboard com dados jÃ¡ publicados.
+1. O usuário acessa a landing page do projeto.
+2. O visitante pode visualizar o dashboard com dados já publicados.
 3. O visitante pode importar uma planilha em modo demo local.
-4. No modo demo, os dados sÃ£o tratados e exibidos apenas na sessÃ£o atual.
+4. No modo demo, os dados são tratados e exibidos apenas na sessão atual.
 5. Um administrador autenticado pode substituir ou adicionar dados no Supabase.
-6. O dashboard recalcula KPIs, grÃ¡ficos, comparativos e alertas.
+6. O dashboard recalcula KPIs, gráficos, comparativos e alertas.
 7. Os dados processados podem ser exportados em CSV.
 
 ---
 
-## Modo demo e seguranÃ§a
+## Modo demo e segurança
 
-O projeto foi preparado para funcionar como link pÃºblico de portfÃ³lio.
+O projeto foi preparado para funcionar como link público de portfólio.
 
-Visitantes podem testar planilhas em modo demo, mas nÃ£o possuem permissÃ£o para alterar a base real do Supabase. Nesse fluxo, a planilha Ã© processada localmente no navegador e os indicadores sÃ£o atualizados apenas durante a sessÃ£o atual.
+Visitantes podem testar planilhas em modo demo, mas não possuem permissão para alterar a base real do Supabase. Nesse fluxo, a planilha é processada localmente no navegador e os indicadores são atualizados apenas durante a sessão atual.
 
 Administradores autenticados podem salvar dados no Supabase, respeitando as policies configuradas no banco.
 
@@ -118,26 +120,26 @@ Administradores autenticados podem salvar dados no Supabase, respeitando as poli
 - CPL
 - Leads
 - Vendas
-- Ticket mÃ©dio
-- Comparativo de perÃ­odo
+- Ticket médio
+- Comparativo de período
 - Alertas operacionais por desempenho
 
 ---
 
 ## Formato esperado da planilha
 
-A planilha deve conter colunas relacionadas a datas, origem/canal e indicadores comerciais. O parser aceita variaÃ§Ãµes de nomes, mas o formato recomendado Ã©:
+A planilha deve conter colunas relacionadas a datas, origem/canal e indicadores comerciais. O parser aceita variações de nomes, mas o formato recomendado é:
 
-| Coluna | DescriÃ§Ã£o |
+| Coluna | Descrição |
 | --- | --- |
-| data | Data de referÃªncia do registro |
-| source_sheet | Origem, canal ou aba de referÃªncia |
-| investimento_ads | Investimento em mÃ­dia paga |
+| data | Data de referência do registro |
+| source_sheet | Origem, canal ou aba de referência |
+| investimento_ads | Investimento em mídia paga |
 | leads | Quantidade de leads gerados |
 | vendas | Quantidade de vendas realizadas |
 | faturamento | Receita gerada |
 | lucro | Lucro estimado ou informado |
-| cpa | Custo por aquisiÃ§Ã£o |
+| cpa | Custo por aquisição |
 | cpl | Custo por lead |
 | roi | Retorno sobre investimento |
 | margem | Margem de lucro |
@@ -155,7 +157,7 @@ copy .env.example .env
 npm run dev
 ```
 
-No arquivo `frontend/.env`, configure as variÃ¡veis pÃºblicas do Supabase:
+No arquivo `frontend/.env`, configure as variáveis públicas do Supabase:
 
 ```env
 VITE_SUPABASE_URL=sua_url_do_supabase
@@ -176,51 +178,51 @@ streamlit run app/dashboard.py
 
 ## Supabase
 
-O projeto utiliza Supabase/PostgreSQL para persistÃªncia dos dados.
+O projeto utiliza Supabase/PostgreSQL para persistência dos dados.
 
 Arquivos principais:
 
-- `supabase/schema.sql`: criaÃ§Ã£o das tabelas e Ã­ndices.
-- `supabase/seed.sql`: dados iniciais de demonstraÃ§Ã£o.
-- `supabase/authenticated_read_policies.sql`: leitura para usuÃ¡rios autenticados.
-- `supabase/authenticated_write_policies.sql`: escrita para usuÃ¡rios autenticados.
+- `supabase/schema.sql`: criação das tabelas e índices.
+- `supabase/seed.sql`: dados iniciais de demonstração.
+- `supabase/authenticated_read_policies.sql`: leitura para usuários autenticados.
+- `supabase/authenticated_write_policies.sql`: escrita para usuários autenticados.
 
-As policies foram organizadas para permitir leitura pÃºblica dos dados de demonstraÃ§Ã£o e restringir alteraÃ§Ãµes no banco a usuÃ¡rios autenticados.
+As policies foram organizadas para permitir leitura pública dos dados de demonstração e restringir alterações no banco a usuários autenticados.
 
 ---
 
-## SeguranÃ§a
+## Segurança
 
-- Visitantes nÃ£o possuem permissÃ£o de escrita no Supabase.
-- O modo demo nÃ£o altera a base principal.
-- A chave privada de service role nÃ£o Ã© usada no frontend.
-- VariÃ¡veis pÃºblicas do Supabase ficam no ambiente do frontend.
-- OperaÃ§Ãµes de insert/delete sÃ£o restritas a usuÃ¡rios autenticados.
+- Visitantes não possuem permissão de escrita no Supabase.
+- O modo demo não altera a base principal.
+- A chave privada de service role não é usada no frontend.
+- Variáveis públicas do Supabase ficam no ambiente do frontend.
+- Operações de insert/delete são restritas a usuários autenticados.
 
 ---
 
 ## Status
 
-Projeto em versÃ£o MVP, desenvolvido para demonstrar um fluxo completo de anÃ¡lise de dados aplicado a um contexto de negÃ³cio.
+Projeto em versão MVP, desenvolvido para demonstrar um fluxo completo de análise de dados aplicado a um contexto de negócio.
 
-O sistema jÃ¡ possui deploy pÃºblico, dashboard funcional, modo demo, autenticaÃ§Ã£o administrativa, persistÃªncia em banco, alertas e exportaÃ§Ãµes.
+O sistema já possui deploy público, dashboard funcional, modo demo, autenticação administrativa, persistência em banco, alertas e exportações.
 
 ---
 
-## PrÃ³ximos passos
+## Próximos passos
 
-- Adicionar perfis de usuÃ¡rio e controle administrativo mais granular.
-- Melhorar validaÃ§Ã£o de planilhas antes da importaÃ§Ã£o.
-- Criar histÃ³rico de importaÃ§Ãµes.
-- Adicionar testes automatizados para o parser e cÃ¡lculos principais.
-- Evoluir alertas com regras configurÃ¡veis.
-- Adicionar mais visualizaÃ§Ãµes analÃ­ticas para BI.
+- Adicionar perfis de usuário e controle administrativo mais granular.
+- Melhorar validação de planilhas antes da importação.
+- Criar histórico de importações.
+- Adicionar testes automatizados para o parser e cálculos principais.
+- Evoluir alertas com regras configuráveis.
+- Adicionar mais visualizações analíticas para BI.
 
 ---
 
 ## Autor
 
-Desenvolvido por **JoÃ£o Marcelo Ferreira de Jesus**.
+Desenvolvido por **João Marcelo Ferreira de Jesus**.
 
 - GitHub: https://github.com/Joao-MF-Jesus
 - LinkedIn: https://www.linkedin.com/in/joao-marcelo-f-jesus
