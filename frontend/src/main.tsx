@@ -264,8 +264,9 @@ function Dashboard() {
   const months = React.useMemo(() => Array.from(new Set(records.map((record) => getMonth(record.data)))).sort(), [records]);
   const sources = React.useMemo(() => Array.from(new Set(records.map((record) => record.source_sheet))).sort(), [records]);
   const currentMonth = selectedMonth === "all" ? undefined : selectedMonth;
-  const currentPeriodLabel = selectedMonth === "all" ? "Periodo filtrado" : selectedMonth;
-  const previousMonth = currentMonth ? months[months.indexOf(currentMonth) - 1] : months[months.length - 1];
+  const currentPeriodLabel = selectedMonth === "all" ? "Período filtrado" : selectedMonth;
+  const comparisonBaseMonth = currentMonth ?? months[months.length - 1];
+  const previousMonth = comparisonBaseMonth ? months[months.indexOf(comparisonBaseMonth) - 1] : undefined;
   const effectiveComparisonMonth = comparisonMonth === "previous" ? previousMonth : comparisonMonth;
 
   const filteredRecords = records.filter((record) => {
@@ -451,15 +452,15 @@ function Dashboard() {
             <Metric label="Lucro" value={formatCurrency(totals.lucro)} />
             <Metric label="ROI" value={formatPercent(totals.roi)} />
             <Metric label="Margem" value={formatPercent(totals.margem)} />
-            <Metric label="CPA medio" value={formatCurrency(totals.cpa)} />
-            <Metric label="CPL medio" value={formatCurrency(totals.cpl)} />
+            <Metric label="CPA médio" value={formatCurrency(totals.cpa)} />
+            <Metric label="CPL médio" value={formatCurrency(totals.cpl)} />
             <Metric label="Leads" value={formatNumber(totals.leads)} />
             <Metric label="Vendas" value={formatNumber(totals.vendas)} />
           </section>
 
           <section className="export-panel">
             <div>
-              <h2>Exportacoes</h2>
+              <h2>Exportações</h2>
               <p>Baixe os dados filtrados para auditoria, acompanhamento ou apresentacao.</p>
             </div>
             <div className="export-actions">
@@ -525,7 +526,7 @@ function Dashboard() {
           </section>
 
           <section className="comparison-grid">
-            <Panel title="Comparativo de periodo">
+            <Panel title="Comparativo de período">
               {effectiveComparisonMonth && comparisonRecords.length > 0 ? (
                 <>
                   <div className="comparison-header">
@@ -573,7 +574,7 @@ function Dashboard() {
                   </div>
                 </>
               ) : (
-                <p className="empty">Selecione um mes com periodo anterior disponivel para comparar.</p>
+                <p className="empty">Selecione um mês com período anterior disponível para comparar.</p>
               )}
             </Panel>
 
@@ -583,19 +584,19 @@ function Dashboard() {
                   <p>
                     Faturamento {percentDelta(totals.faturamento, comparisonTotals.faturamento) >= 0 ? "cresceu" : "caiu"}{" "}
                     <strong>{formatPercent(Math.abs(percentDelta(totals.faturamento, comparisonTotals.faturamento)))}</strong>{" "}
-                    em relacao a {effectiveComparisonMonth}.
+                    em relação a {effectiveComparisonMonth}.
                   </p>
                   <p>
                     O ROI variou <strong>{formatPercent(totals.roi - comparisonTotals.roi)}</strong> e a margem variou{" "}
                     <strong>{formatPercent(totals.margem - comparisonTotals.margem)}</strong>.
                   </p>
                   <p>
-                    Ticket medio atual: <strong>{formatCurrency(totals.ticketMedio)}</strong>. Periodo comparado:{" "}
+                    Ticket médio atual: <strong>{formatCurrency(totals.ticketMedio)}</strong>. Período comparado:{" "}
                     <strong>{formatCurrency(comparisonTotals.ticketMedio)}</strong>.
                   </p>
                 </div>
               ) : (
-                <p className="empty">A leitura executiva aparece quando existem dois periodos comparaveis.</p>
+                <p className="empty">A leitura executiva aparece quando existem dois períodos comparáveis.</p>
               )}
               {comparisonChartData.length > 0 && (
                 <ResponsiveContainer width="100%" height={compactChartHeight}>
